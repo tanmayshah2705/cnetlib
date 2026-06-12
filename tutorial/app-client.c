@@ -1,7 +1,7 @@
 /**
  *@example app-client.c
+ *An example that uses Client API to send and receive data.
  *@author Tanmay Shah
- *@brief An example that uses Client API to send and receive data.
 */
 #include<stdio.h>
 #include<stdlib.h>

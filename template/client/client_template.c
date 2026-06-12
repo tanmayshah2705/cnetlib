@@ -5,8 +5,7 @@
 
 /*
  * Template: client_template.c
- * Quick start: set the server address and port (or run with: ./app-client <server> <port>),
- * replace placeholder request/response logic as needed.
+ * Quick start: set the server address and port (or run with: ./app-client <server> <port>), and replace placeholder request/response logic as needed.
  */
 
 #include<stdio.h>

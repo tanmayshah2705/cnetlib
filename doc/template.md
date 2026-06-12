@@ -34,9 +34,9 @@
 @page client_template client_template.c
 @brief Minimal client template using the csnl library.
 
-\verbinclude{../template/client/client_template.c}
+\include client_template.c
 
 @page server_template server_template.c
 @brief Minimal server template using the ssnl library.
 
-\verbinclude{../template/server/server_template.c}
+\include server_template.c

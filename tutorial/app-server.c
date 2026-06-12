@@ -1,7 +1,7 @@
 /**
  *@example app-server.c
+ *An example that uses Server API to setup a server and accept client connections.
  *@author Tanmay Shah
- *@brief An example that uses Server API to setup a server and accept client connections.
 */
 #include<stdio.h>
 #include<stdlib.h>

@@ -1,7 +1,7 @@
 /**
  *@example shutdown-server.c
+ *An example that Client API to send shutdown request.
  *@author Tanmay Shah
- *@brief An example that Client API to send shutdown request.
 */
 #include<stdio.h>
 #include<string.h>

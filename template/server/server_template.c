@@ -5,8 +5,7 @@
 
 /*
  * Template: server_template.c
- * Quick start: set the server port (run with: ./app-server <port>),
- * replace placeholder handlers and add logging/error handling as needed.
+ * Quick start: set the server port (or run with: ./app-server <port>), replace placeholder handlers and error handling as needed.
  */
 
 #include<stdio.h>
