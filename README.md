@@ -1,81 +1,261 @@
-# cnetlib
+# cnetlib (Network Layer Library)
 
-`cnetlib` is a lightweight C network layer for creating TCP client/server applications.
-It provides socket connection helpers, remote/local IP and port inspection, and a small server event API.
+A lightweight TCP networking library for C to create client-server applications using POSIX sockets.
 
-## Included packages
+It simplify common networking tasks such as establishing connections, exchanging data, managing clients, and handling connection-related errors.
 
-- `include/` — public headers for client/server APIs (`csnl.h`, `ssnl.h`)
-- `lib/` — library binaries for client/server (`libcsnl`, `libssnl`)
-- `template/` — copy-paste starter client/server templates for quick application building
-- `tutorial/` — example applications that demonstrate how to use the APIs
-- `doc/` — Doxygen configuration and documentation source files
+The library is split into two components:
+
+* **CSNL** (Client Side Network Layer)
+* **SSNL** (Server Side Network Layer)
+
+
+
+---
+
+## Documentation
+
+Complete API documentation is available online:
+
+**https://tanmayshah2705.github.io/cnetlib/**
+
+The documentation is generated using Doxygen and includes:
+
+- API reference
+- Function documentation
+- Data structures
+- Usage information
+- Source code navigation
+
+Generate documentation using:
+
+```bash
+doxygen doc/Doxyfile
+```
+
+Documentation sources are located in:
+
+```text
+doc/
+```
+
+---
 
 ## Features
 
-- TCP client connect and request/response handling
-- TCP server start/stop and client connection callbacks
-- Remote/local IP and port lookup helpers
-- Error reporting helpers with message strings
-- Example apps for basic client/server usage and shutdown handling
+### Client Side Network Layer (CSNL)
 
-## Quick start
+* Connect to TCP servers
+* Send and receive data
+* Retrieve local and remote endpoint information
+* Detect connection failures
+* Access error information
+* Disconnect and release resources
 
-Build the client and server using the provided headers and libraries.
+### Server Side Network Layer (SSNL)
+
+* Create and manage TCP servers
+* Start and stop listening services
+* Handle incoming client connections through callbacks
+* Send and receive data from connected clients
+* Retrieve endpoint information
+* Detect failures and access error information
+* Release allocated resources
+
+---
+
+## Project Structure
+
+```text
+cnetlib/
+├── include/
+│   ├── csnl.h
+│   └── ssnl.h
+│
+├── src/
+│   ├── client/
+│   │   └── csnl.c
+│   └── server/
+│       └── ssnl.c
+│
+├── tutorial/
+│   ├── app-client.c
+│   ├── app-server.c
+│   └── shutdown-server.c
+│
+├── doc/
+│   ├── Doxyfile
+│   ├── DoxygenLayout.xml
+│   └── main.md
+│
+├── Makefile
+├── deploy_docs.sh
+├── LICENSE
+└── README.md
+```
+
+---
+
+## Requirements
+
+* Linux
+* GCC
+* GNU Make
+* POSIX sockets
+* pthread library
+
+---
+
+## Building
+
+Build the library:
+
+```bash
+make
+```
+
+Generated libraries:
+
+```text
+lib/libcsnl.a
+lib/libssnl.a
+```
+
+Clean build artifacts:
+
+```bash
+make clean
+```
+
+---
+
+## Installation
+
+Build the project:
+
+```bash
+make
+```
+
+Include the appropriate header and link against the required static library.
+
+### Client Applications
+
+```c
+#include <csnl.h>
+```
+
+```bash
+gcc client.c  -Iinclude  -Llib  -lcsnl  -o client
+```
+
+### Server Applications
+
+```c
+#include <ssnl.h>
+```
+
+```bash
+gcc server.c  -Iinclude  -Llib  -lssnl  -lpthread  -o server
+```
+
+---
+
+## Quick Example
 
 ### Client
 
-```sh
-gcc tutorial/app-client.c \
-    -Iinclude -Llib -lcsnl \
-    -o app-client
+```c
+tcp_connection *conn = tcp_connect("localhost", 5406);
+
+if (!tcp_connection_failed(conn))
+{
+    tcp_connection_send(
+        conn,
+        "Hello",
+        5
+    );
+}
+
+disconnect_tcp_connection(conn);
+release_tcp_connection(conn);
 ```
 
 ### Server
 
-```sh
-gcc tutorial/app-server.c \
-    -Iinclude -Llib -lssnl -lpthread \
-    -o app-server
+```c
+tcp_server *server = allocate_tcp_server(5406);
+
+tcp_start_server(server);
+
+/* Server runs until stopped */
+
+release_tcp_server(server);
 ```
 
-> Adjust include/library paths as needed for your local layout.
+---
 
-## Running the examples
+## Examples
 
-1. Start the server:
+The `tutorial/` directory contains example programs demonstrating library usage.
 
-```sh
-./app-server 5046
+| File                | Description             |
+| ------------------- | ----------------------- |
+| `app-client.c`      | Example TCP client      |
+| `app-server.c`      | Example TCP server      |
+| `shutdown-server.c` | Example shutdown client |
+
+
+---
+
+## API Overview
+
+### Client Library
+
+Main functionality includes:
+
+* Establish TCP connection
+* Send and receive data
+* Retrieve local and remote endpoint information
+* Detect connection failures
+* Report connection errors
+
+Header:
+
+```text
+include/csnl.h
 ```
 
-2. Run the client:
+### Server Library
 
-```sh
-./app-client localhost 5046
+Main functionality includes:
+
+* TCP server creation and management
+* Client connection handling through callbacks
+* Send and receive data from connected clients
+* Retrieve Local and remote endpoint information
+* Detect connection failures
+* Report connection errors
+  
+
+Header:
+
+```text
+include/ssnl.h
 ```
 
-3. The client sends a hello message, the server replies, then the client sends a stop request.
+---
 
-## Documentation
+## Error Handling
 
-The `doc/` folder contains Doxygen sources and configuration.
-Run `doxygen doc/Doxyfile` to generate HTML documentation.
+Both the client and server libraries provide functions for detecting failures and retrieving error messages.
 
-The generated docs include:
-- Main project overview
-- Client API reference
-- Server API reference
-- Examples/tutorials
-- Templates
+Applications should check the result of operations and handle errors appropriately.
 
-## Notes
-
-- The tutorial examples are the best place to learn `cnetlib` usage.
-- `tcp_connection_get_*_ip()` / `tcp_client_get_*_ip()` and `*_error()` return malloc'd strings that must be freed.
+---
 
 ## License
 
-This project is released under the MIT License — see the [LICENSE](LICENSE) file included in the repository.
+This project is licensed under the MIT License.
 
-Copyright (c) 2026 Tanmay Shah
+See the [LICENSE](LICENSE) file for details.
