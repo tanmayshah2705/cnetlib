@@ -1,6 +1,8 @@
 *.out
 *.o
 *.a
+*.zip
+*.tar.gz
 lib/
 doc/html/
 template/
