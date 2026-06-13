@@ -27,7 +27,7 @@ deploy_docs:
 
 
 #create release zip
-release: lib/libssnl.a lib/libcsnl.a template/server/server_template.c template/client/client_template.c template/readme.txt README.md
+release: 
 	mkdir cnetlib-v$(VERSION)
 	cp -r include lib template README.md LICENSE cnetlib-v$(VERSION)/
 	zip -r cnetlib-v$(VERSION).zip cnetlib-v$(VERSION)/
