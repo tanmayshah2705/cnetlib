@@ -1,4 +1,4 @@
-VERSION = 1.1
+VERSION = 1.0.1
 
 .PHONY: all docs deploy_docs release clean
 
