@@ -11,10 +11,10 @@ lib/libcsnl.a: src/client/csnl.o
 	ar rcs lib/libcsnl.a src/client/csnl.o
 
 src/server/ssnl.o: src/server/ssnl.c include/ssnl.h
-	gcc -c src/server/ssnl.c -Iinclude
+	gcc -c src/server/ssnl.c -o src/server/ssnl.o -Iinclude
 
 src/client/csnl.o: src/client/csnl.c include/csnl.h
-	gcc -c src/client/csnl.c -Iinclude
+	gcc -c src/client/csnl.c -o src/client/csnl.o -Iinclude
 
 
 #generate documentation
